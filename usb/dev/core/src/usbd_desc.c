@@ -56,29 +56,24 @@
 
 
 #define USBD_VID                        0x0483
-
-#ifdef STM32F2XX
- #define USBD_PID                       0x5730
-#else
- #define USBD_PID                       0x5730
-#endif /* STM32F2XX */
+#define USBD_PID                        0x5730
 
 /** @defgroup USB_String_Descriptors
   * @{
   */ 
 #define USBD_LANGID_STRING              0x409
-#define USBD_MANUFACTURER_STRING        "Polprzewodnikowy"
+#define USBD_MANUFACTURER_STRING        (uint8_t *)"Polprzewodnikowy"
 
-#define USBD_PRODUCT_FS_STRING          "STM32F4Discovery Stream FS Mode"
-#define USBD_PRODUCT_HS_STRING          "STM32F4Discovery Stream HS Mode"
-#define USBD_SERIALNUMBER_FS_STRING     "00000000034E"
-#define USBD_SERIALNUMBER_HS_STRING     "00000000034F"
+#define USBD_PRODUCT_FS_STRING          (uint8_t *)"STM32F4Discovery Stream FS Mode"
+#define USBD_PRODUCT_HS_STRING          (uint8_t *)"STM32F4Discovery Stream HS Mode"
+#define USBD_SERIALNUMBER_FS_STRING     (uint8_t *)"00000000034E"
+#define USBD_SERIALNUMBER_HS_STRING     (uint8_t *)"00000000034F"
 
-#define USBD_CONFIGURATION_FS_STRING    "AUDIO Config"
-#define USBD_INTERFACE_FS_STRING        "AUDIO Interface"
+#define USBD_CONFIGURATION_FS_STRING    (uint8_t *)"AUDIO Config"
+#define USBD_INTERFACE_FS_STRING        (uint8_t *)"AUDIO Interface"
 
-#define USBD_CONFIGURATION_HS_STRING    "AUDIO Config"
-#define USBD_INTERFACE_HS_STRING        "AUDIO Interface"
+#define USBD_CONFIGURATION_HS_STRING    (uint8_t *)"AUDIO Config"
+#define USBD_INTERFACE_HS_STRING        (uint8_t *)"AUDIO Interface"
 
 /**
   * @}
@@ -197,6 +192,7 @@ uint8_t USBD_LangIDDesc[USB_SIZ_STRING_LANGID] =
 */
 uint8_t *  USBD_USR_DeviceDescriptor( uint8_t speed , uint16_t *length)
 {
+  speed = speed;
   *length = sizeof(USBD_DeviceDesc);
   return USBD_DeviceDesc;
 }
@@ -210,6 +206,7 @@ uint8_t *  USBD_USR_DeviceDescriptor( uint8_t speed , uint16_t *length)
 */
 uint8_t *  USBD_USR_LangIDStrDescriptor( uint8_t speed , uint16_t *length)
 {
+  speed = speed;
   *length =  sizeof(USBD_LangIDDesc);  
   return USBD_LangIDDesc;
 }
@@ -246,6 +243,7 @@ uint8_t *  USBD_USR_ProductStrDescriptor( uint8_t speed , uint16_t *length)
 */
 uint8_t *  USBD_USR_ManufacturerStrDescriptor( uint8_t speed , uint16_t *length)
 {
+  speed = speed;
   USBD_GetString (USBD_MANUFACTURER_STRING, USBD_StrDesc, length);
   return USBD_StrDesc;
 }

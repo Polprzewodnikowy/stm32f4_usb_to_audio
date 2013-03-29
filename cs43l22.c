@@ -17,6 +17,8 @@ void cs43l22_init(uint32_t freq)
 	if(freq != 0)
 		current_freq = freq;
 
+	current_freq = current_freq;	//warning
+
 	cs43l22_i2c_init();
 
 	gpio_pin_cfg(CS43L22_RESET_GPIO, CS43L22_RESET_PIN, GPIO_OUT_PP_2MHz);		//reset
@@ -32,8 +34,6 @@ void cs43l22_init(uint32_t freq)
 	//cs43l22_i2c_write(0x05, 0b10100000);
 	cs43l22_i2c_write(0x06, 0b00000111);
 
-	//cs43l22_volume(-12);
-
 	cs43l22_i2c_write(0x00, 0x99);
 	cs43l22_i2c_write(0x47, 0x80);
 	cs43l22_i2c_write(0x32, (1<<7));
@@ -43,8 +43,8 @@ void cs43l22_init(uint32_t freq)
 	RCC->PLLI2SCFGR = ((6<<28)|(258<<6));
 	RCC->APB1ENR |= RCC_APB1ENR_SPI3EN;
 	SPI3->CR2 |= SPI_CR2_TXDMAEN;
-	SPI3->I2SCFGR =	SPI_I2SCFGR_I2SMOD|SPI_I2SCFGR_I2SCFG_1;
-	SPI3->I2SPR = SPI_I2SPR_MCKOE|SPI_I2SPR_ODD|3;
+	SPI3->I2SCFGR =	SPI_I2SCFGR_I2SMOD | SPI_I2SCFGR_I2SCFG_1;
+	SPI3->I2SPR = SPI_I2SPR_MCKOE | SPI_I2SPR_ODD | 3;
 	RCC->CR |= RCC_CR_PLLI2SON;
 	while((RCC->CR & RCC_CR_PLLI2SRDY) == RESET);
 	SPI3->I2SCFGR |= SPI_I2SCFGR_I2SE;
@@ -60,7 +60,7 @@ void cs43l22_init(uint32_t freq)
 						|DMA_SxCR_MINC
 						|DMA_SxCR_PSIZE_0
 						|DMA_SxCR_MSIZE_1
-						|DMA_SxCR_PL;
+						|DMA_SxCR_PL_1;
 	DMA1_Stream5->FCR = DMA_SxFCR_FTH;
 
 	return;
@@ -131,7 +131,9 @@ void cs43l22_i2c_init(void)
 
 void i2c_write(uint8_t address, uint8_t* data, uint32_t length)
 {
-	uint32_t dummy;
+	uint32_t dummy = 0;
+
+	dummy = dummy;	//warning
 
 	STM32_I2C_PERI->CR1 |= I2C_CR1_START;						// request a start
 	while((STM32_I2C_PERI->SR1 & I2C_SR1_SB) == RESET);			// wait for start to finish

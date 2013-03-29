@@ -51,7 +51,6 @@
 #include <usbd_audio_core.h>
 #include <usbd_desc.h>
 #include <usbd_usr.h>
-#include <usb_bsp.h>
 
 /*
 +=============================================================================+

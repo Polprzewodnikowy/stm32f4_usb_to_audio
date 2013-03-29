@@ -30,7 +30,7 @@
 #ifndef __USB_AUDIO_OUT_IF_H_
 #define __USB_AUDIO_OUT_IF_H_
 
-#include "stm32f4xx.h"
+#include "config.h"
 #include "cs43l22.h"
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
@@ -45,6 +45,7 @@
 /** @defgroup usbd_audio_Exported_Defines
   * @{
   */ 
+
 /* Audio Commands enmueration */
 typedef enum
 {
@@ -105,6 +106,7 @@ extern AUDIO_FOPS_TypeDef AUDIO_OUT_fops;
   */ 
 
 #endif  /* __USB_AUDIO_OUT_IF_H_ */
+
 /**
   * @}
   */ 

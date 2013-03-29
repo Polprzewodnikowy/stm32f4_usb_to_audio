@@ -108,6 +108,7 @@ static uint8_t AudioState = AUDIO_STATE_INACTIVE;
   */
 static uint8_t Init(uint32_t AudioFreq, uint32_t Volume, uint32_t options)
 {
+	options = options;
 	static uint32_t Initialized = 0;
 	if(Initialized == 0)
 	{
@@ -127,10 +128,11 @@ static uint8_t Init(uint32_t AudioFreq, uint32_t Volume, uint32_t options)
   */
 static uint8_t DeInit(uint32_t options)
 {
+	options = options;
 	AudioState = AUDIO_STATE_INACTIVE;
-	GPIOD->BSRRH = GPIO_BSRR_BS_12;
-	GPIOD->BSRRH = GPIO_BSRR_BS_13;
-	GPIOD->BSRRH = GPIO_BSRR_BS_14;
+	LEDG_bb = 0;
+	LEDO_bb = 0;
+	LEDR_bb = 0;
 	return AUDIO_OK;
 }
 
@@ -151,29 +153,29 @@ static uint8_t AudioCmd(uint8_t* pbuf, uint32_t size, uint8_t cmd)
 		case AUDIO_CMD_PLAY:
 			cs43l22_play((uint32_t)pbuf, size);
 			AudioState = AUDIO_STATE_PLAYING;
-			GPIOD->BSRRL = GPIO_BSRR_BS_12;
-			GPIOD->BSRRH = GPIO_BSRR_BS_13;
+			LEDO_bb = 0;
+			LEDG_bb = 1;
 			break;
 		case AUDIO_CMD_STOP:
 			cs43l22_stop();
 			AudioState = AUDIO_STATE_STOPPED;
-			GPIOD->BSRRH = GPIO_BSRR_BS_12;
-			GPIOD->BSRRH = GPIO_BSRR_BS_13;
+			LEDO_bb = 0;
+			LEDG_bb = 0;
 			break;
 		case AUDIO_CMD_PAUSE:
 			if(AudioState == AUDIO_STATE_PLAYING)
 			{
 				cs43l22_stop();
 				AudioState = AUDIO_STATE_PAUSED;
-				GPIOD->BSRRH = GPIO_BSRR_BS_12;
-				GPIOD->BSRRL = GPIO_BSRR_BS_13;
+				LEDO_bb = 1;
+				LEDG_bb = 0;
 			}
 			else if(AudioState == AUDIO_STATE_PAUSED)
 			{
 				cs43l22_play((uint32_t)pbuf, size);
 				AudioState = AUDIO_STATE_PLAYING;
-				GPIOD->BSRRL = GPIO_BSRR_BS_12;
-				GPIOD->BSRRH = GPIO_BSRR_BS_13;
+				LEDO_bb = 0;
+				LEDG_bb = 1;
 			}
 			break;
 		default:
@@ -203,16 +205,10 @@ static uint8_t VolumeCtl(uint8_t vol)
   */
 static uint8_t MuteCtl(uint8_t cmd)
 {
-	if(cmd)
-	{
-		cs43l22_mute(cmd);
-		GPIOD->BSRRL = GPIO_BSRR_BS_14;
-	}
-	else
-	{
-		cs43l22_mute(cmd);
-		GPIOD->BSRRH = GPIO_BSRR_BS_14;
-	}
+	cs43l22_mute(cmd);
+	if(cmd == AUDIO_MUTE)			LEDR_bb = 1;
+	else if(cmd == AUDIO_UNMUTE)	LEDR_bb = 0;
+	else							{LEDR_bb = 0; return AUDIO_FAIL;}
 	return AUDIO_OK;
 }
 
@@ -225,6 +221,7 @@ static uint8_t MuteCtl(uint8_t cmd)
   */
 static uint8_t PeriodicTC(uint8_t cmd)
 {
+	cmd = cmd;
 	return AUDIO_OK;
 }
 
