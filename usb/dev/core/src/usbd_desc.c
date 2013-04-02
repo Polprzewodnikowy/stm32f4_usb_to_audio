@@ -61,7 +61,7 @@
 /** @defgroup USB_String_Descriptors
   * @{
   */ 
-#define USBD_LANGID_STRING              0x409
+#define USBD_LANGID_STRING              0x415	//Polish, 0x409 - English(US)
 #define USBD_MANUFACTURER_STRING        (uint8_t *)"Polprzewodnikowy"
 
 #define USBD_PRODUCT_FS_STRING          (uint8_t *)"STM32F4Discovery Stream FS Mode"

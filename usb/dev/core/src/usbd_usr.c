@@ -30,6 +30,7 @@
 #include "usbd_ioreq.h"
 #include "usb_dcd_int.h"
 #include "usb_conf.h"
+#include "config.h"
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
 * @{
@@ -142,7 +143,7 @@ void USBD_USR_DeviceReset(uint8_t speed)
 */
 void USBD_USR_DeviceConfigured(void)
 {
-	GPIOD->BSRRL = GPIO_BSRR_BS_15;
+	LEDB_bb = 1;
 }
 
 
@@ -177,7 +178,7 @@ void USBD_USR_DeviceDisconnected(void)
 */
 void USBD_USR_DeviceSuspended(void)
 {
-	GPIOD->BSRRH = GPIO_BSRR_BS_15;
+	LEDB_bb = 0;
 }
 
 
@@ -189,7 +190,7 @@ void USBD_USR_DeviceSuspended(void)
 */
 void USBD_USR_DeviceResumed(void)
 {
-	GPIOD->BSRRL = GPIO_BSRR_BS_15;
+	LEDB_bb = 1;
 }
 
 //void USBD_USR_DataOut(u8 *report, u16 len)

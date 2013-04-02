@@ -48,7 +48,7 @@
 
 #include "gpio.h"
 
-#include <usbd_audio_core.h>
+#include <usbd_audio.h>
 #include <usbd_desc.h>
 #include <usbd_usr.h>
 

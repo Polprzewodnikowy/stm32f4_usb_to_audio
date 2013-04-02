@@ -35,13 +35,10 @@
 #define VOLUME_CONVERT(Volume)	((Volume > 100) ? 100 : ((uint8_t)((Volume * 255) / 100)))
 
 void cs43l22_init(uint32_t freq);
-void cs43l22_play(uint32_t pbuf, uint32_t size);
+void cs43l22_deinit(void);
+void cs43l22_play(uint32_t *pbuf, uint32_t size);
 void cs43l22_stop(void);
 void cs43l22_volume(uint8_t vol);
 void cs43l22_mute(uint8_t cmd);
-void cs43l22_i2c_write(uint8_t addr, uint8_t data);
-void cs43l22_i2c_init(void);
-void i2c_write(uint8_t address, uint8_t* data, uint32_t length);
-
 
 #endif /* CS43L22_H_ */

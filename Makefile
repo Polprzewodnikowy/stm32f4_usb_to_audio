@@ -38,7 +38,7 @@ LD_SCRIPT = STM32F4xxxG_rom.ld
 OUT_DIR = out
 
 # global definitions for C++, C and ASM (e.g. "symbol_with_value=0xDEAD symbol_without_value")
-GLOBAL_DEFS = STM32F4XX USE_USB_OTG_FS
+GLOBAL_DEFS = STM32F4XX __VFP_FP__ USE_USB_OTG_FS
 
 # C++ definitions
 CXX_DEFS =
@@ -51,7 +51,7 @@ AS_DEFS =
 
 # include directories (absolute or relative paths to additional folders with
 # headers, current folder is always included)
-INC_DIRS = inc usb/dev/class/audio/inc usb/dev/core/inc usb/otg/inc
+INC_DIRS = inc usb/dev/class/audio_v2/inc usb/dev/core/inc usb/otg/inc
 
 # library directories (absolute or relative paths to additional folders with
 # libraries)
@@ -63,7 +63,7 @@ LIBS =
 
 # additional directories with source files (absolute or relative paths to
 # folders with source files, current folder is always included)
-SRCS_DIRS = usb/dev/class/audio/src usb/dev/core/src usb/otg/src
+SRCS_DIRS = usb/dev/class/audio_v2/src usb/dev/core/src usb/otg/src
 
 # extension of C++ files
 CXX_EXT = cpp
